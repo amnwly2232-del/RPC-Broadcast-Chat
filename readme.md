@@ -1,31 +1,42 @@
 # RPC Broadcast Chat (Go)
 
-This project modifies a Go `net/rpc` chat system to support real-time broadcasting with Go concurrency.
+A simple real-time chat system built with Go **net/rpc**. Clients connect to an RPC server, and messages are **broadcast** to all other connected clients using Go **goroutines + channels**.
 
-## Features
-- Multiple clients connect to a single RPC server.
-- When a client joins, all other clients are notified: `User [ID] joined`.
-- When a client sends a message, it is broadcast to all other clients (no self-echo).
-- Uses goroutines and channels for concurrent send/receive.
-- Shared client list is synchronized using a `Mutex`.
-- Leave notification when a client exits: `User [ID] left`.
+---
 
-## Files
-- `server.go` : RPC chat server (broadcast event loop + client registry)
-- `client.go` : RPC client (input loop + long polling receive loop)
+## ✅ Features
+- RPC-based chat server using `net/rpc` over TCP
+- Real-time broadcast (server broadcaster loop)
+- Join / Leave notifications:
+  - `User [ID] joined`
+  - `User [ID] left`
+- No self-echo (sender does **not** receive their own messages)
+- Concurrency using goroutines and channels
+- Thread-safe client registry using `sync.Mutex`
 
-## Requirements
-- Go (any recent version should work)
+---
 
-## How To Run
+## 📁 Project Structure
+- `server.go` — RPC Server (client registry + broadcaster)
+- `client.go` — RPC Client (send loop + long-poll receive loop)
+- `README.md` — Instructions
+
+---
+
+## 🧰 Requirements
+- Go (any recent version)
+
+---
+
+## 🚀 Run Instructions
 ```bash
 # 1) Start the server
 go run server.go
 
-# Server listens on:
+# Server runs on:
 # 127.0.0.1:12346
 
-# 2) Run clients (in separate terminals)
+# 2) Run clients (open 2 terminals)
 # Terminal 1:
 go run client.go
 

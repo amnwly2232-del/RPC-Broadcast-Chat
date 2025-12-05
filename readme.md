@@ -27,8 +27,8 @@ The server listens on:
 
     127.0.0.1:12346
 
-2) Run clients (in separate terminals)
-
+### 2) Run clients (in separate terminals)
+```bash
 Terminal 1:
 
 go run client.go
